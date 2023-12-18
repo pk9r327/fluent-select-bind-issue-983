@@ -1,0 +1,68 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+<PageTitle>Home</PageTitle>
+
+<div>
+	<h3>Using @@bind-SelectedOption</h3>
+	<p>SelectedOption: @selectedOption?.GetHashCode()</p>
+	<p>SelectedOption Text: @selectedOption?.Text</p>
+	<p>SelectedOption Value: @selectedOption?.Value</p>
+
+	<FluentLabel>Select 1</FluentLabel>
+	<FluentSelect AriaLabel="Select 1"
+				  Items="items"
+				  TOption="Option<int?>"
+				  OptionText="@(o => o.Text?.ToString() ?? "")"
+				  OptionValue="@(o => o.Value?.ToString() ?? "")"
+				  @bind-SelectedOption="selectedOption" />
+	<FluentLabel>Select 2</FluentLabel>
+	<FluentSelect AriaLabel="Select 2"
+				  Items="items"
+				  TOption="Option<int?>"
+				  OptionText="@(o => o.Text?.ToString() ?? "")"
+				  OptionValue="@(o => o.Value?.ToString() ?? "")"
+				  @bind-SelectedOption="selectedOption" />
+</div>
+<br />
+<FluentButton OnClick="@(args => selectedOption = items.Single(i => i.Value == null))">Set Option null</FluentButton>
+<FluentButton OnClick="@(args => selectedOption = items.Single(i => i.Value == 1))">Set Option 1</FluentButton>
+<FluentButton OnClick="@(args => selectedOption = items.Single(i => i.Value == 2))">Set Option 2</FluentButton>
+<FluentButton OnClick="@(args => selectedOption = items.Single(i => i.Value == 3))">Set Option 3</FluentButton>
+<br />
+<br />
+<div>
+	<h3>Using @@bind-Value</h3>
+	<p>SelectedValue: @selectedValue</p>
+	<FluentLabel>Select 3</FluentLabel>
+	<FluentSelect AriaLabel="Select 3"
+				  Items="items"
+				  TOption="Option<int?>"
+				  OptionText="@(o => o.Text?.ToString() ?? "")"
+				  OptionValue="@(o => o.Value?.ToString() ?? "")"
+				  @bind-Value="selectedValue" />
+	<FluentLabel>Select 4</FluentLabel>
+	<FluentSelect AriaLabel="Select 4"
+				  Items="items"
+				  TOption="Option<int?>"
+				  OptionText="@(o => o.Text?.ToString() ?? "")"
+				  OptionValue="@(o => o.Value?.ToString() ?? "")"
+				  @bind-Value="selectedValue" />
+</div>
+<br />
+<FluentButton OnClick="@(args => selectedValue = items.Single(i => i.Value == null).Value.ToString())">Set Option null</FluentButton>
+<FluentButton OnClick="@(args => selectedValue = items.Single(i => i.Value == 1).Value.ToString())">Set Option 1</FluentButton>
+<FluentButton OnClick="@(args => selectedValue = items.Single(i => i.Value == 2).Value.ToString())">Set Option 2</FluentButton>
+<FluentButton OnClick="@(args => selectedValue = items.Single(i => i.Value == 3).Value.ToString())">Set Option 3</FluentButton>
+
+@code {
+	Option<int?>? selectedOption;
+	string? selectedValue;
+	List<Option<int?>> items = new List<Option<int?>>
+	{
+		new() { Text = null, Value = null },
+		new() { Text = 1, Value = 1 },
+		new() { Text = 2, Value = 2 },
+		new() { Text = 3, Value = 3 }
+	};
+}
